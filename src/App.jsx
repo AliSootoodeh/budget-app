@@ -7,6 +7,7 @@ import EntryLines from "./components/EntryLines";
 import MainForm from "./components/MainForm";
 import MainHeader from "./components/MainHeader";
 import ModalEdit from "./components/ModalEdit";
+import { createStore } from "redux";
 
 const initialEntries = [
   { id: 1, description: "somthing new", price: 1200000, isExpense: true },
@@ -56,6 +57,10 @@ function App() {
     setTotalIncomes(totalIncomes);
   }, [entries]);
 
+  const store = createStore((state = initialEntries) => {
+    return state;
+  });
+  console.log(store.getState());
   function deleteEntry(id) {
     const result = entries.filter((entry) => entry.id !== id);
     setEntries(result);

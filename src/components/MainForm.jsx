@@ -1,17 +1,19 @@
 import React from "react";
 import { Form } from "semantic-ui-react";
+import useEntryDetails from "../hooks/useEntryDetails";
 import EntryForm from "./EntryForm";
 import MainButton from "./MainButton";
 
-function MainForm({
-  addEntry,
-  description,
-  setDescription,
-  price,
-  setPrice,
-  isExpense,
-  setIsExpense,
-}) {
+function MainForm() {
+  const {
+    description,
+    setDescription,
+    price,
+    setPrice,
+    isExpense,
+    setIsExpense,
+    addEntry,
+  } = useEntryDetails();
   return (
     <Form unstackable>
       <EntryForm
@@ -22,7 +24,7 @@ function MainForm({
         isExpense={isExpense}
         setIsExpense={setIsExpense}
       />
-      <MainButton addEntry={() => addEntry()} />
+      <MainButton addEntry={addEntry} />
     </Form>
   );
 }

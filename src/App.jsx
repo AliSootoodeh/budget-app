@@ -7,41 +7,21 @@ import EntryLines from "./components/EntryLines";
 import MainForm from "./components/MainForm";
 import MainHeader from "./components/MainHeader";
 import ModalEdit from "./components/ModalEdit";
-import { createStore } from "redux";
-
-const initialEntries = [
-  { id: 1, description: "somthing new", price: 1200000, isExpense: true },
-  {
-    id: 2,
-    description: "somting amazing",
-    price: 200000,
-    isExpense: false,
-  },
-  { id: 3, description: "somting good", price: 100000, isExpense: true },
-];
+import { useSelector } from "react-redux";
 
 function App() {
-  const [entries, setEntries] = useState(initialEntries);
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [isExpense, setIsExpense] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
-  const [entryId, setEntryId] = useState(false);
+  const [entry, setEntry] = useState();
   const [totalIncomes, setTotalIncomes] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [total, setTotal] = useState(0);
+  const { isOpen, id } = useSelector((state) => state.modals);
+  const entries = useSelector((state) => state.entries);
+
   useEffect(() => {
-    if (!isOpen && entryId) {
-      const index = entries.findIndex((entry) => entry.id === entryId);
-      const newEntries = [...entries];
-      newEntries[index].description = description;
-      newEntries[index].price = price;
-      newEntries[index].isExpense = isExpense;
-      setEntries(newEntries);
-      resetEntry();
-    }
+    const index = entries.findIndex((entry) => entry.id === id);
+    setEntry(entries[index]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  }, [isOpen, id]);
 
   useEffect(() => {
     let totalIncomes = 0;
@@ -57,47 +37,6 @@ function App() {
     setTotalIncomes(totalIncomes);
   }, [entries]);
 
-  const store = createStore((state = initialEntries) => {
-    return state;
-  });
-  console.log(store.getState());
-  function deleteEntry(id) {
-    const result = entries.filter((entry) => entry.id !== id);
-    setEntries(result);
-  }
-
-  function editEntry(id) {
-    console.log("you are editing entry");
-    if (id) {
-      const index = entries.findIndex((entry) => entry.id === id);
-      const { price, description, isExpense } = entries[index];
-      setEntryId(id);
-      setDescription(description);
-      setPrice(price);
-      setIsExpense(isExpense);
-      setIsOpen(true);
-    }
-  }
-
-  function addEntry() {
-    setEntries((prevEntries) => [
-      ...prevEntries,
-      {
-        id: prevEntries.length + 1,
-        price: Number(price),
-        isExpense,
-        description,
-      },
-    ]);
-    resetEntry();
-  }
-
-  function resetEntry() {
-    setDescription("");
-    setIsExpense(true);
-    setPrice("");
-  }
-
   return (
     <Container>
       <MainHeader title="Budget" type="h1" />
@@ -112,33 +51,10 @@ function App() {
         totalExpenses={totalExpenses}
       />
       <MainHeader title="History" type="h3" />
-      <EntryLines
-        entries={entries}
-        deleteEntry={deleteEntry}
-        isOpen={isOpen}
-        editEntry={editEntry}
-      />
+      <EntryLines entries={entries} />
       <MainHeader title="Add new transaction" type="h3" />
-      <MainForm
-        addEntry={addEntry}
-        description={description}
-        setDescription={setDescription}
-        price={price}
-        setPrice={setPrice}
-        isExpense={isExpense}
-        setIsExpense={setIsExpense}
-      />
-      <ModalEdit
-        addEntry={addEntry}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        description={description}
-        setDescription={setDescription}
-        price={price}
-        setPrice={setPrice}
-        isExpense={isExpense}
-        setIsExpense={setIsExpense}
-      />
+      <MainForm />
+      <ModalEdit isOpen={isOpen} {...entry} />
     </Container>
   );
 }

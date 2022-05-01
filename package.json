@@ -21,7 +21,9 @@
     "start": "semantic-ui-css-patch && react-scripts start",
     "build": "semantic-ui-css-patch && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "backend": "json-server --watch db.json --port 3001",
+    "start:all": "concurrently \"yarn start\" \"yarn backend\""
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +45,7 @@
   },
   "devDependencies": {
     "@semantic-ui-react/css-patch": "^1.0.0",
+    "concurrently": "^7.1.0",
     "redux-devtools": "^3.7.0"
   }
 }

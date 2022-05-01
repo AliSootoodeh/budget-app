@@ -1,0 +1,22 @@
+{
+  "entries": [
+    {
+      "id": 1,
+      "description": "somthing new",
+      "price": 1200000,
+      "isExpense": true
+    },
+    {
+      "id": 2,
+      "description": "somting amazing",
+      "price": "200000",
+      "isExpense": false
+    },
+    {
+      "id": 3,
+      "description": "somting good",
+      "price": 100000,
+      "isExpense": true
+    }
+  ]
+}

@@ -29,6 +29,6 @@ export const populateEntriesRedux = (entries) => {
   return { type: types.POPULATE_ENTRIES, payload: entries };
 };
 
-export const populateEntryDetails = (id, entry) => {
+export const populateEntryDetailsRedux = (id, entry) => {
   return { type: types.POPULATE_ENTRIES_DETAILS, payload: { entry, id } };
 };

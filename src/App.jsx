@@ -42,7 +42,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getAllEntriesRedux());
-  });
+  }, [dispatch]);
   return (
     <Container>
       <MainHeader title="Budget" type="h1" />

@@ -13,7 +13,7 @@ function DisplayBalance({
       <Statistic.Label style={{ textAlign: { textAlign } }}>
         {labelText}
       </Statistic.Label>
-      <Statistic.Value>{valueText}</Statistic.Value>
+      <Statistic.Value>{isNaN(valueText) ? 0 : valueText}</Statistic.Value>
     </Statistic>
   );
 }
